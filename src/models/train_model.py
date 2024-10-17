@@ -21,7 +21,7 @@ def decision_tree_learning(training_dataset, depth):
 
     If all examples in the current dataset have the same label, the function returns a leaf node.
     """
-    unique_labels, counts = np.unique(training_dataset[:, -1], return_counts=True)
+    unique_labels = np.unique(training_dataset[:, -1])
     if len(unique_labels) == 1:
         return {"attribute": None, "value": unique_labels[0], "left": None, "right": None}, depth
     else:
