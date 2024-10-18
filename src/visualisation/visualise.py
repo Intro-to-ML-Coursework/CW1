@@ -50,7 +50,7 @@ if __name__ == '__main__':
     tree, tree_depth = decision_tree_learning(dataset_clean, 0)
 
     # Set up the plot
-    plt.figure(figsize=(10, tree_depth))  # Dynamically adjust the figure size based on depth
+    plt.figure(figsize=(60, 6 * tree_depth))  # Dynamically adjust the figure size based on depth
     plt.axis('off')  # Turn off the axis
 
     # Plot the decision tree
