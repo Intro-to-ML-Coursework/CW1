@@ -56,6 +56,9 @@ if __name__ == '__main__':
     # Plot the decision tree
     plot_decision_tree(tree, tree_depth)
 
+    # Save the plot
+    plt.savefig("tree.png")
+
     # Display the plot
     plt.show()
 
