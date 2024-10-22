@@ -70,7 +70,7 @@ def plot_and_save_to(tree, depth, path):
     plt.axis('off')
 
     # Plot the decision tree
-    plot_decision_tree(tree, depth)
+    plot_decision_tree(tree)
 
     # Save the plot
     plt.savefig(path)
