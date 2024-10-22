@@ -23,12 +23,17 @@ def decision_tree_learning(training_dataset, depth):
     """
     unique_labels = np.unique(training_dataset[:, -1])
     if len(unique_labels) == 1:
+        # All samples have the same label, return a leaf node
         return {"attribute": None, "value": unique_labels[0], "left": None, "right": None}, depth
     else:
+        # Perform split that maximises information gain
         split_attribute, split_value, l_dataset, r_dataset = find_split(training_dataset)
         node = {"attribute": split_attribute, "value": split_value}
+
+        # Recursively build the left and right children
         node["left"], l_depth = decision_tree_learning(l_dataset, depth + 1)
         node["right"], r_depth = decision_tree_learning(r_dataset, depth + 1)
+
         return node, max(l_depth, r_depth)
 
 
@@ -54,28 +59,51 @@ def find_split(training_dataset):
     """
     num_samples = len(training_dataset)
     unique_labels, inverse_indices, counts = np.unique(training_dataset[:, -1], return_inverse=True, return_counts=True)
+    # Calculate the entropy of the original dataset
     h_all = entropy(counts)
+
+    # Iterate over each attribute and each value to determine the best split point
     max_gain, corresponding_attribute_index, corresponding_value = 0, None, None
+
+    # Iterate over each attribute
     for attribute_index in range(training_dataset.shape[1] - 1):
+
+        # Initialise the label counts of the left subset to be all zero
         left_label_counts = np.zeros_like(unique_labels, dtype=int)
+
+        # Initialise the label counts of the right subset to be that of the original dataset
         right_label_counts = counts.copy()
+
+        # Sort the dataset based on this attribute
         sorted_dataset = training_dataset[np.argsort(training_dataset[:, attribute_index])]
         sorted_indices = inverse_indices[np.argsort(training_dataset[:, attribute_index])]
+
+        # Iterate over each value of this attribute, from smallest to largest
         previous_value = sorted_dataset[0, attribute_index]
         for i, label_index in enumerate(sorted_indices):
             if sorted_dataset[i, attribute_index] != previous_value:
+                # Arrive at a new potential split point
                 previous_value = sorted_dataset[i, attribute_index]
+
+                # Calculate the information gain for this split point
                 remainder = (i / num_samples * entropy(left_label_counts)
                              + (num_samples - i) / num_samples * entropy(right_label_counts))
                 gain = h_all - remainder
                 if gain > max_gain:
+                    # Highest information gain so far, record the information gain, the attribute and the value of this
+                    # split point
                     max_gain = gain
                     corresponding_attribute_index = attribute_index
                     corresponding_value = sorted_dataset[i, attribute_index]
+
+            # Update the label counts for both left and right subset
             left_label_counts[label_index] += 1
             right_label_counts[label_index] -= 1
+
+    # Partition the dataset into left and right subsets based on the split point that maximises information gain
     l_dataset = training_dataset[training_dataset[:, corresponding_attribute_index] < corresponding_value]
     r_dataset = training_dataset[training_dataset[:, corresponding_attribute_index] >= corresponding_value]
+
     return corresponding_attribute_index, corresponding_value, l_dataset, r_dataset
 
 
@@ -92,11 +120,17 @@ def entropy(label_counts):
     The function first removes any zero counts from the label distribution, then calculates the proportion
     of each label. It uses the formula for entropy: H = -Σ(p * log2(p)), where p is the proportion of each label.
     """
+    # Filter positive counts
     label_counts = label_counts[label_counts > 0]
+
+    # Calculate proportions of each label
     proportions = label_counts / sum(label_counts)
+
+    # Calculate the entropy
     return -np.sum(proportions * np.log2(proportions))
 
 
+# Example usage
 if __name__ == '__main__':
     dataset_clean = np.loadtxt("../../wifi_db/clean_dataset.txt")
     dataset_noisy = np.loadtxt("../../wifi_db/noisy_dataset.txt")

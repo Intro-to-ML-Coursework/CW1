@@ -20,16 +20,26 @@ def information_gain(dataset, attribute, value):
     based on the given attribute and value. It calculates the weighted entropy of these two subsets and
     subtracts it from the original entropy to obtain the information gain.
     """
+    # Partition the dataset into left and right subsets based on the splitting attribute and value
     left = dataset[dataset[:, attribute] < value]
     right = dataset[dataset[:, attribute] >= value]
+
+    # Calculate the counts of unique labels
     _, left_label_counts = np.unique(left[:, -1], return_counts=True)
     _, right_label_counts = np.unique(right[:, -1], return_counts=True)
+
+    # Calculate the remainder entropy after the split
     remainder = (len(left) / len(dataset) * entropy(left_label_counts)
                  + len(right) / len(dataset) * entropy(right_label_counts))
+
+    # Calculate the entropy of the original dataset
     _, total_label_counts = np.unique(dataset[:, -1], return_counts=True)
+
+    # Return the information gain
     return entropy(total_label_counts) - remainder
 
 
+# Example usage
 if __name__ == '__main__':
     dataset_clean = np.loadtxt("../../wifi_db/clean_dataset.txt")
     print(information_gain(dataset_clean, 0, -54))
