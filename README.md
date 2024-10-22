@@ -1,4 +1,4 @@
-# Decision Tree Training, Visualization, and Evaluation
+# Decision Tree Training, Visualisation, and Evaluation
 
 This project involves training a decision tree for predicting the room number using Wi-Fi signal data, visualizing the
 trained decision tree, and evaluating its performance. The code is structured into several modules to handle training,
@@ -49,6 +49,7 @@ console.
 ```bash
 # Navigate to the models directory
 cd src/models
+
 # Run the training script
 python train_model.py
 ```
@@ -60,6 +61,7 @@ tree and save it as ```tree.png``` in the ```visualisation/``` directory.
 ```bash
 # Navigate to the visualisation directory
 cd ../visualisation
+
 # Run the visualisation script
 python visualise.py
 ```
@@ -76,6 +78,7 @@ To run the evaluation:
 ```bash
 # Navigate to the evaluation directory
 cd ../evaluation
+
 # Run the evaluation script
 python evaluate.py
 ```
