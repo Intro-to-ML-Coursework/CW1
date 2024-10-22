@@ -1,6 +1,6 @@
 # Decision Tree Training, Visualisation, and Evaluation
 
-This project involves training a decision tree for predicting the room number using Wi-Fi signal data, visualizing the
+This project involves training a decision tree for predicting the room number using Wi-Fi signal data, visualising the
 trained decision tree, and evaluating its performance. The code is structured into several modules to handle training,
 visualisation, and evaluation tasks.
 
