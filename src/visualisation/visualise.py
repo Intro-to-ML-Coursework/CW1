@@ -2,7 +2,7 @@ from random import random
 
 import numpy as np
 import matplotlib.pyplot as plt
-from src.models.train_model import decision_tree_learning
+from src.models.train_model import DecisionTreeClassifier, decision_tree_learning
 
 
 def plot_decision_tree(tree, x_min=0., x_max=1., y=0.):
@@ -78,7 +78,9 @@ def plot_and_save_to(tree, depth, path):
 
 # Example usage
 if __name__ == '__main__':
-    dataset_clean = np.loadtxt("../../wifi_db/clean_dataset.txt")
-    decisionTree, tree_depth = decision_tree_learning(dataset_clean, 0)
+    decision_tree_classifier = DecisionTreeClassifier()
+    decision_tree_classifier.load_model("../models/decision_tree_model.pkl")
 
-    plot_and_save_to(decisionTree, tree_depth, "tree.png")
+    decision_tree = decision_tree_classifier.decision_tree
+    tree_depth = decision_tree_classifier.depth
+    plot_and_save_to(decision_tree, tree_depth, "tree.png")
