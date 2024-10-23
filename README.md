@@ -7,19 +7,19 @@ visualisation, and evaluation tasks.
 ## Project Structure
 - src
   - models
-    - train_model.py
+    - train_model.py `# Script to train the decision tree model`
   - utils
-    - utils.py
+    - utils.py `# Utility functions`
   - visualisation
-    - tree.png
-    - tree_top.png
-    - visualise.py
+    - tree.png `# Saved decision tree visualisation`
+    - tree_top.png `# Top 5 layers of the decision tree visualisation`
+    - visualise.py `# Script to visualise the trained decision tree`
 - wifi_db
-  - clean_dataset.txt
-  - noisy_dataset.txt
-- .gitignore
-- README.md
-- requirements.txt
+  - clean_dataset.txt `# Clean dataset for training`
+  - noisy_dataset.txt `# Noisy dataset for testing`
+- .gitignore `# Files to be ignored by git`
+- README.md `# This file`
+- requirements.txt `# Dependencies for the project`
 
 ## Getting Started
 
