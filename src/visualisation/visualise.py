@@ -1,8 +1,6 @@
-from random import random
-
-import numpy as np
 import matplotlib.pyplot as plt
-from src.models.train_model import DecisionTreeClassifier, decision_tree_learning
+from random import random
+from src.models.train_model import DecisionTreeClassifier
 
 
 def plot_decision_tree(tree, x_min=0., x_max=1., y=0.):
