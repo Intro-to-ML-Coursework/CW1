@@ -1,4 +1,93 @@
 import numpy as np
+import pickle
+
+
+class DecisionTreeClassifier:
+    """
+    A Decision Tree classifier.
+
+    This class implements a basic decision tree for classification. The tree is built using the
+    decision tree learning algorithm, and it supports methods for training, prediction,
+    saving the model to a file, and loading the model from a file.
+    """
+
+    def __init__(self):
+        """
+        Initialise the DecisionTreeClassifier instance.
+
+        Attributes:
+        decision_tree (dict): The dictionary representing the structure of the trained decision tree.
+        depth (int): The depth of the decision tree.
+        """
+        self.decision_tree = dict()
+        self.depth = 0
+
+    def fit(self, training_dataset):
+        """
+        Train the decision tree classifier on the provided training dataset.
+
+        Parameters:
+        training_dataset (numpy.ndarray): The dataset used to train the decision tree. Each row corresponds to a
+                                          sample, and the last column contains the labels.
+
+        Returns:
+        None
+        """
+        self.decision_tree, self.depth = decision_tree_learning(training_dataset, 0)
+
+    def predict(self, x_test):
+        """
+        Predict labels for the provided test data.
+
+        Parameters:
+        x_test (numpy.ndarray): The test dataset (without labels). Each row corresponds to a sample.
+
+        Returns:
+        numpy.ndarray: An array of predicted labels for the test data.
+        """
+        predictions = np.zeros((len(x_test),))
+        for i, sample in enumerate(x_test):
+            # Start at the root of the decision tree
+            node = self.decision_tree
+
+            while node["attribute"] is not None:
+                # Not a leaf, go to the left or right child
+                if sample[node["attribute"]] < node["value"]:
+                    node = node["left"]
+                else:
+                    node = node["right"]
+
+            # Arrive at a leaf, make the prediction
+            predictions[i] = node["value"]
+
+        return predictions
+
+    def save_model(self, path="decision_tree_model.pkl"):
+        """
+        Save the trained decision tree model to a file.
+
+        Parameters:
+        path (str, optional): The file path where the model should be saved (default is 'decision_tree_model.pkl').
+
+        Returns:
+        None
+        """
+        with open(path, "wb") as file:
+            pickle.dump((self.decision_tree, self.depth), file)
+
+    def load_model(self, path="decision_tree_model.pkl"):
+        """
+        Load a previously saved decision tree model from a file.
+
+        Parameters:
+        path (str, optional): The file path from where the model should be loaded
+                              (default is 'decision_tree_model.pkl').
+
+        Returns:
+        None
+        """
+        with open(path, "rb") as file:
+            (self.decision_tree, self.depth) = pickle.load(file)
 
 
 def decision_tree_learning(training_dataset, depth):
@@ -7,7 +96,7 @@ def decision_tree_learning(training_dataset, depth):
 
     Parameters:
     training_dataset (numpy.ndarray): The dataset used to build the decision tree.
-                                       Each row represents a data point, and the last column contains labels.
+                                      Each row represents a data point, and the last column contains labels.
     depth (int): The current depth of the tree during the recursion. It tracks how deep the tree is.
 
     Returns:
@@ -51,7 +140,7 @@ def find_split(training_dataset):
         - float: The value of the best attribute to split the dataset.
         - numpy.ndarray: The left subset of the dataset where the attribute's value is less than the split value.
         - numpy.ndarray: The right subset of the dataset where the attribute's value is greater than
-          or equal to the split value.
+                         or equal to the split value.
 
     The function computes the entropy of the entire dataset and attempts to split the dataset by each attribute.
     It evaluates each possible split by sorting the dataset by attribute values, and for each unique value,
@@ -134,8 +223,12 @@ def entropy(label_counts):
 # Example usage
 if __name__ == '__main__':
     dataset_clean = np.loadtxt("../../wifi_db/clean_dataset.txt")
-    dataset_noisy = np.loadtxt("../../wifi_db/noisy_dataset.txt")
-    print(dataset_clean)
-    print(dataset_noisy)
-    print(decision_tree_learning(dataset_clean, 0))
-    print(decision_tree_learning(dataset_noisy, 0))
+    decision_tree_classifier = DecisionTreeClassifier()
+    decision_tree_classifier.fit(dataset_clean)
+    x_test_samples = np.array([[-67, -61, -62, -67, -77, -83, -91], [-58, -57, -46, -55, -50, -87, -85]])
+    predictions_of_samples = decision_tree_classifier.predict(x_test_samples)
+    print(predictions_of_samples)
+    decision_tree_classifier.save_model()
+    decision_tree_classifier.load_model()
+    print(decision_tree_classifier.decision_tree)
+    print(decision_tree_classifier.depth)

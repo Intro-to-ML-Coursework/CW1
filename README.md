@@ -42,8 +42,8 @@ export PYTHONPATH=$(pwd)
 ```
 
 ### 2. Train the Decision Tree
-To train the decision tree using the provided dataset, run the ```train_model.py``` script. This will read the data from
-the ```wifi_db/clean_dataset.txt``` file, train a decision tree, and print the tree (in the form of a dictionary) to the
+To train the decision tree using the provided dataset, run the `train_model.py` script. This will read the data from
+the `wifi_db/clean_dataset.txt` file, train a decision tree, and print the tree (in the form of a dictionary) to the
 console.
 
 ```bash
@@ -55,8 +55,8 @@ python train_model.py
 ```
 
 ### 3. Visualise the Trained Decision Tree
-To visualise the trained decision tree, run the ```visualise.py``` script. This will generate a plot for the decision
-tree and save it as ```tree.png``` in the ```visualisation/``` directory.
+To visualise the trained decision tree, run the `visualise.py` script. This will generate a plot for the decision
+tree and save it as `tree.png` in the `visualisation/` directory.
 
 ```bash
 # Navigate to the visualisation directory
@@ -67,7 +67,7 @@ python visualise.py
 ```
 
 ### 4. Evaluate the Decision Tree
-The ```evaluate.py``` script will train the decision tree using the provided data and evaluate its performance by
+The `evaluate.py` script will train the decision tree using the provided data and evaluate its performance by
 calculating and printing the following metrics:
 - Confusion matrix
 - Accuracy
@@ -84,14 +84,14 @@ python evaluate.py
 ```
 
 ## Dataset
-The Wi-Fi signal data is provided in the ```wifi_db/``` directory. The files included are:
-- clean_dataset.txt: The clean dataset used for training.
-- noisy_dataset.txt: A noisy dataset for testing and evaluation.
+The Wi-Fi signal data is provided in the `wifi_db/` directory. The files included are:
+- `clean_dataset.txt`: The clean dataset used for training.
+- `noisy_dataset.txt`: A noisy dataset for testing and evaluation.
 
 ## Dependencies
-The project dependencies are listed in ```requirements.txt```. They include:
-- matplotlib==3.9.2
-- numpy==2.1.1
-- scipy==1.14.1
+The project dependencies are listed in `requirements.txt`. They include:
+- `matplotlib==3.9.2`
+- `numpy==2.1.1`
+- `scipy==1.14.1`
 
-Make sure you have these installed by running ```pip install -r requirements.txt```.
+Make sure you have these installed by running `pip install -r requirements.txt`.
