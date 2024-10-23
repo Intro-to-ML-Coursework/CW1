@@ -28,9 +28,6 @@ Ensure you have Python 3.12 installed.\
 Once Python 3.12 is installed, follow the steps below to set up the project:
 
 ```bash
-# Navigate to the project directory
-cd CW1
-
 # Create a virtual environment
 python3 -m venv .venv
 
@@ -39,6 +36,9 @@ source .venv/bin/activate
 
 # Install the required dependencies
 pip install -r requirements.txt
+
+# Tell Python where to look for the src module
+export PYTHONPATH=$(pwd)
 ```
 
 ### 2. Train the Decision Tree
