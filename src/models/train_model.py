@@ -94,6 +94,7 @@ def find_split(training_dataset):
                     # split point
                     max_gain = gain
                     corresponding_attribute_index = attribute_index
+                    # Use the mid-point for splitting
                     corresponding_value = np.mean(sorted_dataset[i-1:i+1, attribute_index])
 
             # Update the label counts for both left and right subset
