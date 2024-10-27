@@ -14,7 +14,7 @@ visualisation, and evaluation tasks.
     - utils.py `# Utility functions`
   - visualisation
     - tree.png `# Saved decision tree visualisation`
-    - tree_top.png `# Top 5 layers of the decision tree visualisation`
+    - tree_cropped.png `# Top 5 layers of the decision tree visualisation`
     - visualise.py `# Script to visualise the trained decision tree`
 - wifi_db
   - clean_dataset.txt `# Clean dataset for training`

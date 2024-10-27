@@ -5,14 +5,14 @@ This report presents the results of our decision tree algorithm, which predicts 
 strengths. The decision tree was built to handle continuous attributes and multiple labels, following guidelines
 provided in the coursework specification.
 
-## Decision Tree Visualization
-Below is the complete visualization of the tree trained on the entire clean dataset.
+## Decision Tree Visualisation
+Below is the complete visualisation of the tree trained on the entire clean dataset (see next page).
 
-![Tree Visualization](src/visualisation/tree.png)
+![Tree Visualisation](src/visualisation/tree.png)
 
-Since the depth of the decision tree is large, the top 5 layers of the tree are displayed below:
+Since the depth of the decision tree is large, the cropped version of the tree is displayed below:
 
-![Tree_Top Visualization](src/visualisation/tree_top.png)
+![Tree_Top Visualisation](src/visualisation/tree_cropped.png)
 
 ## Step 3: Evaluation
 
@@ -21,7 +21,7 @@ A 10-fold cross-validation was conducted on both the clean and noisy datasets.\
 The following averaged metrics were computed:
 
 For **clean datasets**:
-- **Confusion Matrix**:
+- **Averaged Confusion Matrix**:
   |        | Predicted Room 1  | Predicted Room 2 | Predicted Room 3 | Predicted Room 4 |
   |--------|-------------------|------------------|------------------|------------------|
   | Room 1 | 49.4              | 0.               | 0.2              | 0.4              |
@@ -29,23 +29,23 @@ For **clean datasets**:
   | Room 3 | 0.5               | 1.7              | 47.6             | 0.2              |
   | Room 4 | 0.4               | 0.               | 0.2              | 49.4             |
 
-- **Accuracy**:\
+- **Averaged Accuracy**:\
   0.97
-- **Average recall for each room**:
+- **Averaged recall for each room**:
   |        | Average Recall |
   |--------|----------------|
   | Room 1 | 0.98840876     |
   | Room 2 | 0.952233       |
   | Room 3 | 0.95248136     |
   | Room 4 | 0.98773702     |
-- **Average precision for each room**:
+- **Averaged precision for each room**:
   |        | Average precision |
   |--------|-------------------|
   | Room 1 | 0.98195881        |
   | Room 2 | 0.96587966        |
   | Room 3 | 0.94506849        |
   | Room 4 | 0.9872858         |
-- **Average F1-measure for each room**:
+- **Averaged F1-measure for each room**:
   |        | Average F1-measure |
   |--------|--------------------|
   | Room 1 | 0.98503266         |
@@ -54,7 +54,7 @@ For **clean datasets**:
   | Room 4 | 0.98735266         |
 
 For **noisy datasets**:
-- **Confusion Matrix**:
+- **Averaged Confusion Matrix**:
   |        | Predicted Room 1  | Predicted Room 2 | Predicted Room 3 | Predicted Room 4 |
   |--------|-------------------|------------------|------------------|------------------|
   | Room 1 | 39.2              | 2.5              | 3.4              | 3.9              |
@@ -62,23 +62,23 @@ For **noisy datasets**:
   | Room 3 | 3.                | 3.3              | 42.4             | 2.8              |
   | Room 4 | 3.2               | 2.4              | 3.               | 41.2             |
 
-- **Accuracy**:\
+- **Averaged Accuracy**:\
   0.819
-- **Average recall for each room**:
+- **Averaged recall for each room**:
   |        | Average Recall |
   |--------|----------------|
   | Room 1 | 0.80373177     |
   | Room 2 | 0.82266353     |
   | Room 3 | 0.82165509     |
   | Room 4 | 0.83542975     |
-- **Average precision for each room**:
+- **Averaged precision for each room**:
   |        | Average precision |
   |--------|-------------------|
   | Room 1 | 0.81178536        |
   | Room 2 | 0.83360411        |
   | Room 3 | 0.81589391        |
   | Room 4 | 0.82077863        |
-- **Average F1-measure for each room**:
+- **Averaged F1-measure for each room**:
   |        | Average F1-measure |
   |--------|--------------------|
   | Room 1 | 0.80617139         |
@@ -99,11 +99,10 @@ This suggests noise weakened the model’s boundary precision.
 Yes, there is a noticeable difference in performance between the clean and noisy datasets.
 The clean dataset’s accuracy was high (97%), 
 while noisy dataset's accuracy reduced to 81.9%.
-Noise impacts classifier accuracy by introducing ambiguity in feature values,
-leading to increased misclassifications across all rooms.
+Noise likely impacts classifier accuracy by introducing ambiguity in feature values,
+leading to increased misclassifications across all rooms (especially for adjacent rooms).
 This also results in a decrease in recalls, precisions, and F1-measures.
-Noise likely caused signal overlap, especially for adjacent rooms.
-This impacted the tree’s ability to separate classes clearly, increasing errors across all metrics.
+Noise impacted the tree’s ability to separate classes clearly, increasing errors across all metrics.
 
 ## Conclusion
 The decision tree algorithm achieved high accuracy on the clean dataset,
