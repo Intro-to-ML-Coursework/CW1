@@ -1,4 +1,4 @@
-# Decision Tree Report
+# Decision Tree Coursework Report
 
 ## Introduction
 This report presents the results of our decision tree algorithm, which predicts the room number based on Wi-Fi signal
@@ -21,44 +21,70 @@ A 10-fold cross-validation was conducted on both the clean and noisy datasets.\
 The following averaged metrics were computed:
 
 For **clean datasets**:
-- **Confusion Matrix**  
-  |       | Predicted Room 1  | Predicted Room 2 | Predicted Room 3 | Predicted Room 4 |
-  |-------|-------------------|------------------|------------------|------------------|
-  | Room 1| 49.4              | 0.               | 0.2              | 0.4              |
-  | Room 2| 0.                | 47.6             | 2.4              | 0.               |
-  | Room 3| 0.5               | 1.7              | 47.6             | 0.2              |
-  | Room 4| 0.4               | 0.               | 0.2              | 49.4             |
+- **Confusion Matrix**:
+  |        | Predicted Room 1  | Predicted Room 2 | Predicted Room 3 | Predicted Room 4 |
+  |--------|-------------------|------------------|------------------|------------------|
+  | Room 1 | 49.4              | 0.               | 0.2              | 0.4              |
+  | Room 2 | 0.                | 47.6             | 2.4              | 0.               |
+  | Room 3 | 0.5               | 1.7              | 47.6             | 0.2              |
+  | Room 4 | 0.4               | 0.               | 0.2              | 49.4             |
 
 - **Accuracy**:\
   0.97
-- **Class labels**:\
-  [1. 2. 3. 4.]
-- **Average recall for each class**:\
-  [0.98840876 0.952233   0.95248136 0.98773702]
-- **Average precision for each class**:\
-  [0.98195881 0.96587966 0.94506849 0.9872858]
-- **Average F1-measure for each class**:\
-  [0.98503266 0.95883303 0.94858487 0.98735266]
+- **Average recall for each room**:
+  |        | Average Recall |
+  |--------|----------------|
+  | Room 1 | 0.98840876     |
+  | Room 2 | 0.952233       |
+  | Room 3 | 0.95248136     |
+  | Room 4 | 0.98773702     |
+- **Average precision for each room**:
+  |        | Average precision |
+  |--------|-------------------|
+  | Room 1 | 0.98195881        |
+  | Room 2 | 0.96587966        |
+  | Room 3 | 0.94506849        |
+  | Room 4 | 0.9872858         |
+- **Average F1-measure for each room**:
+  |        | Average F1-measure |
+  |--------|--------------------|
+  | Room 1 | 0.98503266         |
+  | Room 2 | 0.95883303         |
+  | Room 3 | 0.94858487         |
+  | Room 4 | 0.98735266         |
 
 For **noisy datasets**:
-- **Confusion Matrix**  
-  |       | Predicted Room 1  | Predicted Room 2 | Predicted Room 3 | Predicted Room 4 |
-  |-------|-------------------|------------------|------------------|------------------|
-  | Room 1| 39.2              | 2.5              | 3.4              | 3.9              |
-  | Room 2| 2.9               | 41.              | 3.4              | 2.4              |
-  | Room 3| 3.                | 3.3              | 42.4             | 2.8              |
-  | Room 4| 3.2               | 2.4              | 3.               | 41.2             |
+- **Confusion Matrix**:
+  |        | Predicted Room 1  | Predicted Room 2 | Predicted Room 3 | Predicted Room 4 |
+  |--------|-------------------|------------------|------------------|------------------|
+  | Room 1 | 39.2              | 2.5              | 3.4              | 3.9              |
+  | Room 2 | 2.9               | 41.              | 3.4              | 2.4              |
+  | Room 3 | 3.                | 3.3              | 42.4             | 2.8              |
+  | Room 4 | 3.2               | 2.4              | 3.               | 41.2             |
 
 - **Accuracy**:\
   0.819
-- **Class labels**:\
-  [1. 2. 3. 4.]
-- **Average recall for each class**:\
-  [0.80373177 0.82266353 0.82165509 0.83542975]
-- **Average precision for each class**:\
-  [0.81178536 0.83360411 0.81589391 0.82077863]
-- **Average F1-measure for each class**:\
-  [0.80617139 0.82532958 0.81709598 0.82499199]
+- **Average recall for each room**:
+  |        | Average Recall |
+  |--------|----------------|
+  | Room 1 | 0.80373177     |
+  | Room 2 | 0.82266353     |
+  | Room 3 | 0.82165509     |
+  | Room 4 | 0.83542975     |
+- **Average precision for each room**:
+  |        | Average precision |
+  |--------|-------------------|
+  | Room 1 | 0.81178536        |
+  | Room 2 | 0.83360411        |
+  | Room 3 | 0.81589391        |
+  | Room 4 | 0.82077863        |
+- **Average F1-measure for each room**:
+  |        | Average F1-measure |
+  |--------|--------------------|
+  | Room 1 | 0.80617139         |
+  | Room 2 | 0.82532958         |
+  | Room 3 | 0.81709598         |
+  | Room 4 | 0.82499199         |
 
 ### Result Analysis
 In the clean dataset, all rooms are recognized with high accuracy,
