@@ -9,6 +9,7 @@ visualisation, and evaluation tasks.
   - evaluation
     - evaluate.py `# Script to evaluate the training algorithm and trained decision tree`
   - models
+    - decision_tree_model.pkl `# Saved decision tree model`
     - train_model.py `# Script to train the decision tree model`
   - utils
     - utils.py `# Utility functions`
@@ -21,6 +22,8 @@ visualisation, and evaluation tasks.
   - noisy_dataset.txt `# Noisy dataset for testing`
 - .gitignore `# Files to be ignored by git`
 - README.md `# This file`
+- report.md `# The Markdown file for the report`
+- report.pdf `# The pdf file for the report`
 - requirements.txt `# Dependencies for the project`
 
 ## Getting Started
