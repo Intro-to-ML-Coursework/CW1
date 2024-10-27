@@ -4,20 +4,18 @@ from src.models.train_model import DecisionTreeClassifier
 
 
 def confusion_matrix(y_gold, y_pred, class_labels=None):
-
     """
     Calculate the confusion matrix for a classification problem.
 
     Parameters:
-    y_gold (np.ndarray): The correct ground truth/gold standard labels.
-    y_pred (np.ndarray): The predicted labels.
-    class_labels (np.ndarray): A list of unique class labels. Defaults to the union of y_gold and y_pred.
+    y_gold (numpy.ndarray): The correct ground truth/gold standard labels.
+    y_pred (numpy.ndarray): The predicted labels.
+    class_labels (numpy.ndarray, optional): A list of unique class labels. Defaults to the union of y_gold and y_pred.
 
     Returns:
-    np.ndarray: Shape (C, C), where C is the number of classes.
+    numpy.ndarray: Shape (C, C), where C is the number of classes.
                 Rows are ground truth per class, columns are predictions.
     """
-
     # If no class_labels are given, we obtain the set of unique class labels from the union of
     # the ground truth annotation and the prediction
     if class_labels is None:
@@ -46,6 +44,16 @@ def confusion_matrix(y_gold, y_pred, class_labels=None):
 
 
 def accuracy(confusion):
+    """
+    Calculate the overall accuracy from a confusion matrix.
+
+    Parameters:
+    confusion (numpy.ndarray): A 2D numpy array (confusion matrix) where each element (i, j) represents the count of
+                               instances with actual class `i` that were predicted as class `j`.
+
+    Returns:
+    float: The accuracy score, a value between 0 and 1.
+    """
     acc = 0
     if np.sum(confusion) > 0:
         acc = np.sum(np.diag(confusion)) / np.sum(confusion)
@@ -53,6 +61,16 @@ def accuracy(confusion):
 
 
 def precision(confusion):
+    """
+    Calculate the precision for each class from a confusion matrix.
+
+    Parameters:
+    confusion (numpy.ndarray): A 2D numpy array (confusion matrix) where each element (i, j) represents the count of
+                               instances with actual class `i` that were predicted as class `j`.
+
+    Returns:
+    numpy.ndarray: A 1D numpy array where each element contains the precision for each class.
+    """
     precisions = np.zeros((len(confusion),))
 
     for i in range(confusion.shape[1]):
@@ -63,6 +81,16 @@ def precision(confusion):
 
 
 def recall(confusion):
+    """
+    Calculate the recall for each class from a confusion matrix.
+
+    Parameters:
+    confusion (numpy.ndarray): A 2D numpy array (confusion matrix) where each element (i, j) represents the count of
+                               instances with actual class `i` that were predicted as class `j`.
+
+    Returns:
+    numpy.ndarray: A 1D numpy array where each element contains the recall for each class.
+    """
     recalls = np.zeros((len(confusion),))
 
     for i in range(confusion.shape[0]):
@@ -73,6 +101,16 @@ def recall(confusion):
 
 
 def f1_measure(precisions, recalls):
+    """
+    Calculate the F1-measure (harmonic mean of precision and recall) for each class.
+
+    Parameters:
+    precisions (numpy.ndarray): A 1D numpy array where each element contains the precision for each class.
+    recalls (numpy.ndarray): A 1D numpy array where each element contains the recall for each class.
+
+    Returns:
+    numpy.ndarray: A 1D numpy array where each element contains the F1-measure for each class.
+    """
     f1_measures = np.zeros((len(precisions),))
 
     for i, (p, r) in enumerate(zip(precisions, recalls)):
@@ -83,20 +121,18 @@ def f1_measure(precisions, recalls):
 
 
 def calculate_metrics(confusion):
-
     """
     Calculate the accuracy, precisions, recalls, and F1-measures from the confusion matrix.
 
     Parameters:
-    conf_matrix (np.ndarray): The confusion matrix.
+    confusion (numpy.ndarray): The confusion matrix.
 
     Returns:
     float: The accuracy.
-    np.ndarray: The precision for each class.
-    np.ndarray: The recall for each class.
-    np.ndarray: The F1-measure for each class.
+    numpy.ndarray: The recall for each class.
+    numpy.ndarray: The precision for each class.
+    numpy.ndarray: The F1-measure for each class.
     """
-
     acc = accuracy(confusion)
     recalls = recall(confusion)
     precisions = precision(confusion)
@@ -106,23 +142,23 @@ def calculate_metrics(confusion):
 
 
 def cross_validation(dataset, classifier, num_folds=10, random_generator=default_rng()):
-
     """
-    Perform k-fold cross-validation to evaluate the classifier.
+    Perform cross-validation on a dataset to evaluate a classifier's performance across multiple folds.
+    This function splits the dataset into `num_folds` subsets, trains the classifier on each combination of
+    `num_folds - 1` subsets, and tests on the remaining subset. It calculates and accumulates performance metrics,
+    including confusion matrix, accuracy, recalls, precisions, and F1-measures for each fold, and takes
+    averages of these metrics for the performance of the whole algorithm.
 
     Parameters:
-    dataset (np.ndarray): The dataset containing all data.
-    classifier (object): The classifier to evaluate.
-    num_folds (int): The number of folds.
+    dataset (numpy.ndarray): A 2D numpy array where each row represents an instance, with the last column as the label.
+    classifier (object): A classifier object with `fit()` and `predict()` methods.
+    num_folds (int, optional): Number of folds to use for cross-validation (default is 10).
+    random_generator (Generator, optional): A numpy random generator to shuffle dataset indices
+                                            (default is `default_rng()`).
 
     Returns:
-    np.ndarray: The average confusion matrix.
-    float: The average accuracy.
-    np.ndarray: The average precision for each class.
-    np.ndarray: The average recall for each class.
-    np.ndarray: The average F1 measure for each class.
+    None: This function prints the average confusion matrix, accuracy, recalls, precisions, and F1-measures.
     """
-
     shuffled_indices = random_generator.permutation(dataset.shape[0])
     split_indices = np.array_split(shuffled_indices, num_folds)
     unique_labels = np.unique(dataset[:, -1])
@@ -181,6 +217,17 @@ def cross_validation(dataset, classifier, num_folds=10, random_generator=default
 
 
 def evaluate(test_db, trained_tree):
+    """
+    Evaluate a trained decision tree on a test dataset and calculate the accuracy.
+
+    Parameters:
+    test_db (numpy.ndarray): A 2D numpy array where each row represents a test instance,
+                             with the last column as the label.
+    trained_tree (object): A trained decision tree object with a `predict()` method.
+
+    Returns:
+    float: The accuracy score of the trained model on the test dataset.
+    """
     x_test = test_db[:, :-1]
     y_test = test_db[:, -1]
 

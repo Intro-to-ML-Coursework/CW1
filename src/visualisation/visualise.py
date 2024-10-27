@@ -9,9 +9,9 @@ def plot_decision_tree(tree, x_min=0., x_max=1., y=0.):
 
     Parameters:
     tree (dict): The decision tree to visualize.
-    x_min (float): The left boundary of the node's x-position.
-    x_max (float): The right boundary of the node's x-position.
-    y (float): The y-position of the node (corresponds to depth).
+    x_min (float, optional): The left boundary of the node's x-position.
+    x_max (float, optional): The right boundary of the node's x-position.
+    y (float, optional): The y-position of the node (corresponds to depth).
 
     Returns:
     None
