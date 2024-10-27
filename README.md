@@ -6,6 +6,8 @@ visualisation, and evaluation tasks.
 
 ## Project Structure
 - src
+  - evaluation
+    - evaluate.py `# Script to evaluate the training algorithm and trained decision tree`
   - models
     - train_model.py `# Script to train the decision tree model`
   - utils
@@ -67,8 +69,8 @@ python visualise.py
 ```
 
 ### 4. Evaluate the Decision Tree
-The `evaluate.py` script will train the decision tree using the provided data and evaluate its performance by
-calculating and printing the following metrics:
+The `evaluate.py` script will evaluate the training algorithm using a 10-fold cross-validation on both the
+clean and noisy datasets and evaluate its performance by calculating and printing the following metrics (averaged):
 - Confusion matrix
 - Accuracy
 - Recall and precision rates per class
