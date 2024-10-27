@@ -158,7 +158,7 @@ def find_split(training_dataset):
     for attribute_index in range(training_dataset.shape[1] - 1):
 
         # Initialise the label counts of the left subset to be all zero
-        left_label_counts = np.zeros_like(unique_labels, dtype=int)
+        left_label_counts = np.array(np.zeros_like(unique_labels, dtype=int))
 
         # Initialise the label counts of the right subset to be that of the original dataset
         right_label_counts = counts.copy()
@@ -220,15 +220,30 @@ def entropy(label_counts):
     return -np.sum(proportions * np.log2(proportions))
 
 
-# Example usage
 if __name__ == '__main__':
+
+    # Load the dataset from file
     dataset_clean = np.loadtxt("../../wifi_db/clean_dataset.txt")
+
+    # Initialise the classifier
     decision_tree_classifier = DecisionTreeClassifier()
+
+    # Train the classifier using the entire dataset
     decision_tree_classifier.fit(dataset_clean)
+
+    # Some test samples
     x_test_samples = np.array([[-67, -61, -62, -67, -77, -83, -91], [-58, -57, -46, -55, -50, -87, -85]])
+
+    # Make predictions
     predictions_of_samples = decision_tree_classifier.predict(x_test_samples)
     print(predictions_of_samples)
+
+    # Save the trained model to a file
     decision_tree_classifier.save_model()
+
+    # Load the trained model from a file
     decision_tree_classifier.load_model()
+
+    # Examine the loaded decision tree model and its depth
     print(decision_tree_classifier.decision_tree)
     print(decision_tree_classifier.depth)

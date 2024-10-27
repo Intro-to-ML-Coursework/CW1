@@ -41,5 +41,9 @@ def information_gain(dataset, attribute, value):
 
 # Example usage
 if __name__ == '__main__':
-    dataset_clean = np.loadtxt("../../wifi_db/clean_dataset.txt")
+
+    # Load the dataset
+    dataset_clean = np.array(np.loadtxt("../../wifi_db/clean_dataset.txt"))
+
+    # Calculate the information gain from splitting the dataset based on attribute 0 and value -54
     print(information_gain(dataset_clean, 0, -54))

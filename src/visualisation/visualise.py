@@ -74,11 +74,15 @@ def plot_and_save_to(tree, depth, path):
     plt.savefig(path)
 
 
-# Example usage
 if __name__ == '__main__':
+
+    # Initialise the classifier and load the pre-trained model
     decision_tree_classifier = DecisionTreeClassifier()
     decision_tree_classifier.load_model("../models/decision_tree_model.pkl")
 
+    # Extract the decision tree model and the tree depth
     decision_tree = decision_tree_classifier.decision_tree
     tree_depth = decision_tree_classifier.depth
+
+    # Plot the visualisation of the decision tree and save the plot to the file path
     plot_and_save_to(decision_tree, tree_depth, "tree.png")

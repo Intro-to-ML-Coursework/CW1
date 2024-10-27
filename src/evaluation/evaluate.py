@@ -55,6 +55,7 @@ def accuracy(confusion):
     float: The accuracy score, a value between 0 and 1.
     """
     acc = 0
+    # Avoid division by zero
     if np.sum(confusion) > 0:
         acc = np.sum(np.diag(confusion)) / np.sum(confusion)
     return acc
@@ -72,8 +73,9 @@ def precision(confusion):
     numpy.ndarray: A 1D numpy array where each element contains the precision for each class.
     """
     precisions = np.zeros((len(confusion),))
-
+    # Iterate through columns
     for i in range(confusion.shape[1]):
+        # Avoid division by zero
         if np.sum(confusion[:, i]) > 0:
             precisions[i] = confusion[i, i] / np.sum(confusion[:, i])
 
@@ -92,8 +94,9 @@ def recall(confusion):
     numpy.ndarray: A 1D numpy array where each element contains the recall for each class.
     """
     recalls = np.zeros((len(confusion),))
-
+    # Iterate through rows
     for i in range(confusion.shape[0]):
+        # Avoid division by zero
         if np.sum(confusion[i, :]) > 0:
             recalls[i] = confusion[i, i] / np.sum(confusion[i, :])
 
@@ -112,8 +115,9 @@ def f1_measure(precisions, recalls):
     numpy.ndarray: A 1D numpy array where each element contains the F1-measure for each class.
     """
     f1_measures = np.zeros((len(precisions),))
-
+    # Iterate through classes
     for i, (p, r) in enumerate(zip(precisions, recalls)):
+        # Avoid division by zero
         if p + r > 0:
             f1_measures[i] = 2 * p * r / (p + r)
 
@@ -159,10 +163,16 @@ def cross_validation(dataset, classifier, num_folds=10, random_generator=default
     Returns:
     None: This function prints the average confusion matrix, accuracy, recalls, precisions, and F1-measures.
     """
+    # Generate a random permutation of indices from 0 to the number of samples
     shuffled_indices = random_generator.permutation(dataset.shape[0])
+
+    # Split shuffled indices into almost equal sized splits
     split_indices = np.array_split(shuffled_indices, num_folds)
+
+    # Extract unique class labels
     unique_labels = np.unique(dataset[:, -1])
 
+    # Initialise cumulative metrics
     cumulative_conf_matrix = np.zeros((len(unique_labels), len(unique_labels)))
     cumulative_accuracy = 0.
     cumulative_recalls = np.zeros((len(unique_labels),))
@@ -228,29 +238,41 @@ def evaluate(test_db, trained_tree):
     Returns:
     float: The accuracy score of the trained model on the test dataset.
     """
+    # Extract test samples and correct ground truth labels
     x_test = test_db[:, :-1]
     y_test = test_db[:, -1]
 
+    # Make predictions
     predictions = trained_tree.predict(x_test)
+
+    # Calculate the confusion matrix
     confusion = confusion_matrix(y_test, predictions)
+
+    # Calculate the accuracy from the confusion matrix
     acc = accuracy(confusion)
 
     return acc
 
 
-# Example usage
 if __name__ == '__main__':
-    
+
+    # Load datasets from files
     dataset_clean = np.array(np.loadtxt("../../wifi_db/clean_dataset.txt"))
     dataset_noisy = np.array(np.loadtxt("../../wifi_db/noisy_dataset.txt"))
 
+    # Create the classifier instance
     decision_tree_classifier = DecisionTreeClassifier()
 
+    # Initialise the random number generator
     seed = 60012
     rg = default_rng(seed)
 
     print("Clean Dataset:")
+    # Perform cross-validation on the clean dataset
     cross_validation(dataset_clean, decision_tree_classifier, num_folds=10, random_generator=rg)
+
     print()
+
     print("Noisy Dataset:")
+    # Perform cross-validation on the noisy dataset
     cross_validation(dataset_noisy, decision_tree_classifier, num_folds=10, random_generator=rg)
