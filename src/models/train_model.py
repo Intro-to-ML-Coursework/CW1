@@ -110,13 +110,25 @@ def decision_tree_learning(training_dataset, depth):
 
     If all examples in the current dataset have the same label, the function returns a leaf node.
     """
-    unique_labels = np.unique(training_dataset[:, -1])
+    # Check if the training dataset is empty
+    if training_dataset.size == 0:
+        return dict(), -1
+
+    # Retrieve unique labels and their respective counts
+    unique_labels, counts = np.unique(training_dataset[:, -1], return_counts=True)
     if len(unique_labels) == 1:
         # All samples have the same label, return a leaf node
         return {"attribute": None, "value": unique_labels[0], "left": None, "right": None}, depth
     else:
         # Perform split that maximises information gain
         split_attribute, split_value, l_dataset, r_dataset = find_split(training_dataset)
+
+        # Account for points with same features but different labels
+        if l_dataset.size == 0 or r_dataset.size == 0:
+            # Return a leaf node with the predicted label being the majority label
+            return {"attribute": None, "value": unique_labels[np.argmax(counts)], "left": None, "right": None}, depth
+
+        # Construct a new node
         node = {"attribute": split_attribute, "value": split_value}
 
         # Recursively build the left and right children
@@ -190,6 +202,8 @@ def find_split(training_dataset):
             left_label_counts[label_index] += 1
             right_label_counts[label_index] -= 1
 
+    if corresponding_attribute_index is None:
+        return None, None, np.array([]), training_dataset
     # Partition the dataset into left and right subsets based on the split point that maximises information gain
     l_dataset = training_dataset[training_dataset[:, corresponding_attribute_index] < corresponding_value]
     r_dataset = training_dataset[training_dataset[:, corresponding_attribute_index] >= corresponding_value]
@@ -223,7 +237,7 @@ def entropy(label_counts):
 if __name__ == '__main__':
 
     # Load the dataset from file
-    dataset_clean = np.loadtxt("../../wifi_db/clean_dataset.txt")
+    dataset_clean = np.array(np.loadtxt("../../wifi_db/clean_dataset.txt"))
 
     # Initialise the classifier
     decision_tree_classifier = DecisionTreeClassifier()
